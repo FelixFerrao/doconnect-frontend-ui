@@ -1,0 +1,83 @@
+<div class="jumbotron">
+  <h1 class="display-4">Hello, {{ admin.name }}</h1>
+  <p class="lead">
+    Here you can view the questions and answers posted by the user. You can
+    approve the questions and answers if they are appropriate
+  </p>
+  <hr class="my-4" />
+  <p><i>Only the approved questions and answers are visible to the users</i></p>
+  <div class="container px-5">
+    <button class="btn btn-outline-primary btn-md" (click)="displayUsers()">
+      Users
+    </button>
+    <button
+      class="btn btn-outline-primary btn-md buttonSpace"
+      (click)="displayQuestions()"
+    >
+      Questions
+    </button>
+    <button
+      class="btn btn-outline-primary btn-md buttonSpace"
+      (click)="displayAnswers()"
+    >
+      Answers
+    </button>
+  </div>
+</div>
+
+<div id="user" class="container display_none">
+  <h1>USERS</h1>
+  <div class="card my-4" *ngFor="let user of userList">
+    <div class="card-body">
+      <p>{{ user.email }}</p>
+    </div>
+  </div>
+</div>
+
+<div id="quest" class="container display_none">
+  <div *ngIf="questionList.length !== 0">
+    <h1>QUESTIONS</h1>
+    <div class="card my-4" *ngFor="let question of questionList">
+      <div class="card-body">
+        <p>{{ question.question }}</p>
+        <p style="text-align: right">{{ question.user.username }}</p>
+        <a
+          class="btn-md btn-outline-success"
+          (click)="approveQuestion(question.id)"
+          >Approve</a
+        >
+      </div>
+    </div>
+  </div>
+  <div *ngIf="questionList.length === 0">
+    <h1>NO QUESTIONS</h1>
+  </div>
+</div>
+
+<div id="ans" class="container display_none">
+  <div *ngIf="answerList.length !== 0">
+    <h1>ANSWERS</h1>
+    <div class="card my-4" *ngFor="let answers of answerList">
+      <div class="card-body">
+        <p>
+          <b>{{ answers.question.question }}</b>
+        </p>
+        <hr />
+        <div class="answer-object mx-2">
+          <p>{{ answers.answer }}</p>
+          <p style="text-align: right; font-size: small">
+            {{ answers.user.username }}
+          </p>
+          <a
+            class="btn-md btn-outline-success"
+            (click)="approveAnswer(answers.id)"
+            >Approve</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="answerList.length === 0">
+    <h1>NO ANSWERS</h1>
+  </div>
+</div>

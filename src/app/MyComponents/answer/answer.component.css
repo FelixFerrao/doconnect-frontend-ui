@@ -1,0 +1,15 @@
+.answer {
+  display: flex;
+  flex-direction: row;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.user-name {
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: right;
+}

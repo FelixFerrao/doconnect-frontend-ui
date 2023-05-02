@@ -1,0 +1,18 @@
+<div class="container my-4">
+    <h2 class="question">
+        {{question.question}}
+    </h2>
+    <div class="answer my-4" *ngFor="let answer of answer_list">
+        <p>{{answer.answer}}</p><br>
+        <p class="user-name">{{answer.username}}</p>
+    </div>
+
+    <form class="my-4" #answerData="ngForm" (ngSubmit)="addAnswer(answerData.value)">
+      <hr>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Your Answer</label>
+          <input type="textbox" placeholder="Your answer" name="user_answer" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" ngModel>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>

@@ -1,0 +1,203 @@
+<br />
+<div class="container">
+  <div>
+    <h1 class="display-4">Hello, {{ user.username }}</h1>
+    <p class="lead">
+      This is the area where you can ask questions to the community and also
+      provide your answers to the community and help others
+    </p>
+    <hr class="my-4" />
+    <!-- <p>
+      It uses utility classes for typography and spacing to space content out
+      within the larger container.
+    </p> -->
+    <a
+      class="btn btn-primary btn-lg"
+      href="#"
+      role="button"
+      data-bs-toggle="modal"
+      data-bs-target="#questionModal"
+      >Ask Question</a
+    >
+    <!-- A dropdown of topic options and on selection of topic call a function get_question_by_topic passing the selected topic from dropdown-->
+    <div class="dropdown my-3">
+      <label for="floatingSelect">Select Topic</label>
+      <select
+        class="form-select"
+        name="topic"
+        (change)="get_question_by_topic($event)"
+      >
+        <option value="all">-- Select a topic --</option>
+        <option value="Python">Python</option>
+        <option value="React">React</option>
+        <option value="Vue">Vue</option>
+      </select>
+    </div>
+  </div>
+  <br />
+
+  <div class="container">
+    <div class="question_container"></div>
+  </div>
+
+  <div class="container">
+    <div
+      class="d-flex align-items-center justify-content-center"
+      *ngFor="let question of getQuestionList()"
+    >
+      <div class="card border-dark mb-3 row" style="width: 100%">
+        <h5 class="card-header">{{ question.topic }}</h5>
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ question.question }}
+          </h5>
+          <p class="card-text" style="width: 100%">
+            {{ question.answer }}
+          </p>
+          <!-- Button trigger modal -->
+          <a
+            href="#"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#answerModal"
+            role="button"
+            (click)="transfer_question_details(question)"
+            >Answer</a
+          >
+          <a
+            href="#"
+            class="btn btn-primary ml-2"
+            role="button"
+            [routerLink]="['/answer/' + question.id]"
+            >View Answer</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Answer Modal -->
+  <div
+    class="modal fade"
+    id="answerModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Give your answer</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            #questionData="ngForm"
+            (ngSubmit)="addAnswer(questionData.value)"
+          >
+            <p>{{ question_details.question }}</p>
+            <div class="form-floating">
+              <textarea
+                class="form-control textArea10em"
+                placeholder="Leave your answer here"
+                id="floatingTextarea"
+                name="answer"
+                ngModel
+              ></textarea>
+              <label for="floatingTextarea">Your Answer</label>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Submit Answer</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ask Question Modal -->
+  <div
+    class="modal fade"
+    id="questionModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ask your question</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            #askquestion="ngForm"
+            (ngSubmit)="askQuestion(askquestion.value)"
+          >
+            <div class="mb-3">
+              <label for="floatingQuestionarea" class="form-label"
+                >Your Question</label
+              >
+              <!-- Get the dropdown to select the topic of the question-->
+              <div class="form-floating my-4">
+                <select
+                  class="form-select"
+                  id="floatingSelect"
+                  aria-label="Floating label select example"
+                  name="topic"
+                  ngModel
+                >
+                  <option selected>Select Topic</option>
+                  <option value="Python">Python</option>
+                  <option value="React">React</option>
+                  <option value="Vue">Vue</option>
+                </select>
+                <label for="floatingSelect">Select Topic</label>
+              </div>
+              <textarea
+                class="form-control"
+                placeholder="Ask your question"
+                id="floatingQuestionarea"
+                name="question"
+                ngModel
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Submit question
+            </button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            id="close-btn"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
